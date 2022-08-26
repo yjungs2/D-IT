@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>onclick 이벤트</title>
+<script>
+	function push() {
+		// alert("push...click"); // html 버튼과 javascript 함수 연결 확인
+		// var demo; 생략해도 전역변수
+		demo = document.getElementById('demo'); // 전역 변수 demo
+		// alert(demo); // 객체로 출력 [object HTMLParagraphElement]
+		
+		// Javascript can change HTML content...innerHTML을 사용
+		demo.innerHTML = "<h2><font color='tomato'>Hello getElementById()~~</h2>";
+	}
+</script>
+<style>
+	h1::SELECTION{
+		background:black;
+		color:yellow;
+	}
+</style>
+</head>
+<body>
+<h1>What Can JavaScript Do?</h1>
+
+<p id="demo">JavaScript can change HTML content.</p>
+
+<button type="button" onclick="push()">Click Me!</button>
+</body>
+</html>

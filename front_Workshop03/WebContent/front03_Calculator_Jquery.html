@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Calculator</title>
+<style type="text/css">
+		h2{ margin-left:60px;}
+		#calc{
+			border:1px solid gray;
+			width:350px;
+			text-align: center;
+		}
+		#formula{
+			text-align: right;
+			width:80%;
+			margin-top:20px;
+			margin-bottom:20px;
+		}
+		#resultDiv{
+			text-align: left;
+			margin-left:40px;
+		}
+		button{
+			width:70px;
+			height:70px;
+			margin:3px 1px;
+		}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var preIsNum = false;
+		var formula = $('#formula'); // document.getElementById("formula");
+		var result = $('#result'); // document.getElementById("result");
+		var count = 0;
+	
+		$('.addNum').click(function () {
+			// alert($(this).attr('value'));
+			if(formula.val() == "" && $(this).attr('value') == 0 )
+				return;
+			formula.val(formula.val() + $(this).attr('value'));
+			preIsNum = true;
+		 });
+		 
+		 $('.addOper').click(function () {
+		 	// alert($(this).attr('value'));
+    		if(preIsNum == false) return;
+    		formula.val(formula.val() + $(this).attr('value'));
+    		preIsNum = false;
+		 });
+		 
+		 $('.reset').click(function () {
+    		formula.val("");
+    	});
+    	
+    	$('.calc').click(function () {
+    		if(preIsNum == false) return;
+    		var answer = (++count)+". "+formula.val()+"="+eval(formula.val())+"<br>";
+    		result.append(answer);
+    		formula.innerHTML = "0.0";
+    		preIsNum = false;
+    	});
+	});
+</script>
+</head>
+<body>
+<h2>Encore Calculator</h2><p></p>
+	<div id="calc">
+		<input type="text" id="formula" value="" placeholder="0.0" readonly/>
+		<div id="pad">
+			<button class="addNum" value="7">7</button>
+			<button class="addNum" value="8">8</button>
+			<button class="addNum" value="9">9</button>
+			<button class="addOper" value="+">+</button>
+			<button class="addNum" value="4">4</button>
+			<button class="addNum" value="5">5</button>
+			<button class="addNum" value="6">6</button>
+			<button class="addOper" value="-">-</button>
+			<button class="addNum" value="1">1</button>
+			<button class="addNum" value="2">2</button>
+			<button class="addNum" value="3">3</button>
+			<button class="addOper" value="*">*</button>
+			<button class="addNum" value="0">0</button>
+			<button class="reset">CE</button>
+			<button class="calc" value="=">=</button>
+			<button class="addOper" value="/">/</button>
+		</div>
+		<div id="resultDiv">
+			<h2>결 과 이 력</h2>
+			<p id="result"></p>
+		</div>
+	</div>
+</body>
+</html>

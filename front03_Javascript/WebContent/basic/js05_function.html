@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>선언적 함수 재정의 동작원리...1</title>
+<script>
+	function calc(x,y) {
+		return x + y;
+	}
+	console.log(calc(5,3)); // 선언적 함수는 메모리에 찾아서 올리고, 마지막에 올라가는 게 곱이다. 이후 콘솔창 출력하므로 15
+	
+	function calc(x,y) {
+		return x * y;
+	}
+	console.log(calc(5,3)); // 15
+</script>
+</head>
+<body>
+
+</body>
+</html>

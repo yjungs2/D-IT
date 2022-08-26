@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- 
+HTML 구조
+HTML
+ |
+ HEAD
+   |
+   META
+   TITLE
+   SCRIPT
+   STYLE
+   
+ BODY
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BasicTag</title>
+<style>
+	#title{
+		width:600px;
+		height:400px;
+		margin:0 auto;
+		text-align:center;
+	}
+	#middle{
+		float:left;
+	}
+	#last{
+		float:right;
+	}
+</style>
+<script>
+	function push() {
+		alert("버튼이 눌러졌습니다.");
+	}
+</script>
+</head>
+<body>
+	<div id="title">
+		<h1><font color='orange'>This is heading 1</font></h1>
+		<h2><font color='yellow'>This is heading 2</font></h2>
+		<h3><font color='green'>This is heading 3</font></h3>
+		<h4><font color='cyan'>This is heading 4</font></h4>
+		<h5><font color='magenta'>This is heading 5</font></h5>
+		<h6><font color='blue'>This is heading 6</font></h6>
+	</div>
+<hr>
+	<div id="middle">
+		<a>Order List(ol 태그 > li 태그)</a>
+		<ol>
+		    <li><a href='http://java.sun.com'>JAVA</a></li>
+		    <li><a href='http://tomcat.apache.org'>JSP</a></li>
+		    <li><a href='http://jquery.com'>JQUERY</a></li>
+		</ol>
+	</div>
+<hr>
+	<div id="last">
+		<a>Unorder List(ul 태그 > li 태그)</a>
+		<ul>
+		    <li><a href='http://java.sun.com'>JAVA</a></li>
+		    <li><a href='http://tomcat.apache.org'>JSP</a></li>
+		    <li><a href='http://jquery.com'>JQUERY</a></li>
+		</ul>
+	</div>
+	<p></p>
+	<button onclick="push()">눌러주세요</button>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Front01 Workshop</title>
+<style>
+	body{
+		width:650px;
+		margin: 0 auto;
+		border : 3px solid red;
+		padding : 20px 80px;
+	}
+	body h1, h2 {
+		text-align:center;
+		color:red;
+	}
+	div {
+		text-align:center;
+	}
+	div>image{
+		float:left;
+	}
+	div>iframe{
+		float:right;
+	}
+	div::after{
+		clear:both;
+	}
+</style>
+</head>
+<body>
+<h1>BNK Theater</h1>
+<h2>탑건 매버릭 예매</h2>
+<div>
+<img width="300px" height="400px" src="https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220609_89%2F1654756627126DPx2G_JPEG%2Fmovie_image.jpg">
+<iframe width="300" height="200"
+src="https://www.youtube.com/embed/Mrj9XACVJ8U"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<form action="#">
+	<p>상영관 <select>
+		<option value="CGV">CGV</option>
+		<option value="롯데시네마">롯데시네마</option>
+		<option value="메가박스">메가박스</option>
+	</select>
+	날짜 선택 <input type="date"></p>
+	<fieldset>
+		 <legend>시간 선택</legend>
+		 <input type="radio" name="0830" checked="checked">08:30
+		 <input type="radio" name="1100">11:00
+		 <input type="radio" name="1420">14:20
+		 <input type="radio" name="1725">17:25
+		 <input type="radio" name="2010">20:10
+		 <input type="radio" name="2305">23:05
+	</fieldset>
+	<p>요금&nbsp;&nbsp;<del>\9,000</del> <ins>\5,000</ins></p>
+	<p>인원 <input type="text" value="0"><br></p>
+	<p>금액 <input type="text" value="0"></p>
+	<p><input type="checkbox" checked="checked">옵션</p>
+	<fieldset>
+		<input type="checkbox">팝콘
+		<input type="checkbox">콜라
+	</fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	// 선언적 함수 선언
+	function showNick() {
+		// 폼에 입력된 값을 받아와서 변수에 할당
+		// nick = document.loginFrm.nick;
+		// alert(nick); // text type 객체 받아옴 -> [object HTMLInputElement]
+		nickValue = document.loginFrm.nick.value;
+		alert(nickValue);
+		document.loginFrm.nick.value = "";
+		document.loginFrm.hobby.focus();
+	}
+	function showHobby() {
+		hobbyValue = document.getElementById('hobby').value;
+		alert(hobbyValue);
+		document.loginFrm.hobby.value = "";
+		document.loginFrm.nick.focus();
+	}
+</script>
+</head>
+<body>
+	<form action="#" name="loginFrm">
+		닉네임 <input type="text" name="nick" id="nick">
+		<input type="button" value="닉네임보기" onclick="showNick()">
+		<br><br>
+		취 미 <input type="text" name="hobby" id="hobby">
+		<input type="button" value="취미보기" onclick="showHobby()">
+		<br><br>
+	</form>
+</body>
+</html>
