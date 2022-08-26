@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<!-- 사용자정의 빈 :: id="user01" :: setter 주입 :: 단순 파라미터 주입 -->
+<bean id="user01" class="spring.service.domain.User">
+	<property name="userId" value="01유저" />
+	<property name="age" value="01" />
+</bean>
+
+<!-- API빈 정의 :: id="password" class="java.lang.String" :: 생성자 값 주입 :: 단순 파라미터 값 -->
+<bean id="password" class="java.lang.String">
+	<constructor-arg value="7777" />
+</bean>
+
+<!-- 사용자정의 빈 :: id="user02" :: setter 단순 파라미터 주입 :: (id)02유저, (age)02, (password)위에 정의한 빈 -->
+<bean id="user02" class="spring.service.domain.User">
+	<property name="userId" value="02유저" />
+	<property name="age" value="02" />
+	<property name="password" ref="password" />
+</bean>
+
+<!-- 사용자빈 정의 :: id="user03" :: DI없음(Dependency Injection)(주입 없음) :: (결과)기본값으로 출력 -->
+<bean id="user03" class="spring.service.domain.User" />
+
+<!-- 사용자빈 정의 :: id="user04" :: 생성자 단순 파라미터값 주입 :: 04, 04유저 -->
+<!-- 생성자(int, String)이므로 04유저, 04면 에러 / 04, 04유저면 잘 출력됨 -->
+<bean id="user04" class="spring.service.domain.User">
+	<constructor-arg value="04"/>
+	<constructor-arg value="04유저"/>
+</bean>
+
+<!--  사용자빈 정의 :: id="user05" :: 생성자 단순 파라미터값 주입 :: 05, 05유저, 0505 -->
+<!-- User(int age, String password, String userId)  -->
+<!-- 생성자 주입보다 setter 주입 선호함 or index나 type 사용 -->
+<bean id="user05" class="spring.service.domain.User">
+	<!-- 
+	<constructor-arg value="05" index="0" />
+	<constructor-arg value="05유저" index="2"/>
+	<constructor-arg value="0505" index="1" />
+	 -->
+	<constructor-arg value="05" type="int" />
+	<constructor-arg value="05유저" type="String"/>
+	<constructor-arg value="0505" index="1" />
+</bean>
+</beans>

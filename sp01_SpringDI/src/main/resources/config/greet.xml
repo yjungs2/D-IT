@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+     <!--
+     	ㅇ Hello instance 생성 서술적, 선언적 기술
+			1. bean element  
+				- id : instance identifier 
+				- class : instance 생성 Bean (FQCN)
+     -->
+    <!-- Greet greet1 = new Greet() -->
+    <!-- greet1 이름으로 Greet 객체를 생성 :: 값 주입은 없음 -->
+	<bean id="greet1" class="spring.service.hello.Greet"></bean>
+	
+	<!-- greet2 이름으로 Greet 객체를 생성 :: 생성자 값 주입 -->
+	<bean id="greet2" class="spring.service.hello.Greet">
+		<constructor-arg value="Hello Spring~~" />
+	</bean>
+	
+	<!-- greet3 이름으로 Greet 객체를 생성 :: setter 값 주입 -->
+	<bean id="greet3" class="spring.service.hello.Greet">
+		<!-- greet3.setMessage("Hello Spring3~~") 아래와 같은 코드 -->
+		<!-- property가 set || name="message" -> camel case 적용해서 setMessage, value값 넣기 -->
+		<property name="message" value="Hello Spring3~~" />
+	</bean>
+	
+	<!-- greet4 이름으로 Greet 객체를 생성 :: 생성자, setter 값 주입 -->
+	<bean id="greet4" class="spring.service.hello.Greet">
+		<constructor-arg value="Spring4~~" />
+		<property name="message" value="Hello Spring4~~" />
+	</bean>
+	
+	<!-- Bean은 2가지 존재 :: API Bean, User Definition Bean -->
+	<bean id="str" class="java.lang.String">
+		<constructor-arg value="스프링 설정문서 만들기" />
+	</bean> <!-- Bean 생성...그 안에 값이 들어있는 경우...이걸 greet5에서 이 값을 생성자로 주입해서 사용하고 싶음 -->
+	
+	<!-- greet5 이름으로 Greet 객체를 생성 :: 생성자 값 주입 :: API값 주입 -->
+	<bean id="greet5" class="spring.service.hello.Greet">
+		<constructor-arg ref="str" />
+	</bean> <!-- 값은 단순 파라미터 값 (value 사용) | API 값 (ref 사용) -->
+	
+	<!-- greet6 이름으로 Greet 객체를 생성 :: setter 값 주입 :: API값 주입 -->
+	<bean id="greet6" class="spring.service.hello.Greet">
+		<property name="message" ref="str" />
+	</bean>
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<!-- diceA, diceB, diceC, diceD 라는 이름으로 주사위 빈을 생성 -->
+<!-- Dice Bean을 4개 정의 :: 사용자정의 빈 :: 주 입없음 ::빈은 실체 클래스(컴포넌트) -->
+<bean id="diceA" class="spring.service.dice.impl.DiceAImpl"></bean>
+<bean id="diceB" class="spring.service.dice.impl.DiceBImpl"></bean>
+<bean id="diceC" class="spring.service.dice.impl.DiceCImpl"></bean>
+<bean id="diceD" class="spring.service.dice.impl.DiceDImpl"></bean>
+
+<!-- 사용자정의 빈 :: 주사위 A를 주입 :: 생성자 주입 -->
+<bean id="player01" class="spring.service.dice.play.Player02">
+	<constructor-arg ref="diceA" />
+</bean>
+
+<!-- 사용자정의 빈 :: 주사위 B를 주입 :: 생성자 주입 -->
+<bean id="player02" class="spring.service.dice.play.Player02">
+	<constructor-arg ref="diceB" />
+</bean>
+
+<!-- 사용자정의 빈 :: 주사위 C를 주입 :: setter 주입 -->
+<bean id="player03" class="spring.service.dice.play.Player02">
+	<property name="dice" ref="diceC" />
+</bean>
+
+<!-- 사용자정의 빈 :: 주사위 A를 주입 :: setter 주입 -->
+<bean id="player04" class="spring.service.dice.play.Player02">
+	<property name="dice" ref="diceA" />
+</bean>
+</beans>
