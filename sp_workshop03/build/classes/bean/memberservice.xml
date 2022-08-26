@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- MyBatis와 DI 스프링 연결 :: 빈 5개 지정 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+<context:property-placeholder location="classpath:config/dbconn.properties" />
+
+<!-- 1. DataSource API 빈 정의 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${jdbc.oracle.driver}"/>
+    <property name="url" value="${jdbc.oracle.url}"/>
+    <property name="username" value="${jdbc.oracle.username}"/>
+    <property name="password" value="${jdbc.oracle.password}"/>
+</bean>
+
+<!-- 2. MyBatis Framework API 빈 정의 :: 2개 정의 -->
+<!-- SqlSession, SqlSessionFactory -->
+<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="configLocation" value="config/SqlMapConfig.xml" />
+    <property name="dataSource" ref="dataSource" />
+</bean>
+
+<!-- 무조건 생성자 주입 -->
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+</bean>
+
+<!-- 3. 비즈니스 로직 레이어에 있는 User Definition 빈 정의 :: 2개 정의 -->
+<bean id="memberDAOImpl" class="spring.service.user.impl.MemberDAOImpl">
+	<property name="sqlSession" ref="sqlSessionTemplate" />
+</bean>
+
+<bean id="memberServiceImpl" class="spring.service.user.impl.MemberServiceImpl">
+	<property name="memberDAO" ref="memberDAOImpl" />
+</bean>
+</beans>
