@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="ns.sql.MyProductMapper">
+<!-- INSERT문에서 PK에 해당하는 값이 DB에서 자동증가되는 값일 때는 쿼리문 작성에 유의해야 한다.
+	즉, 화면으로부터 값을 받아서 생성하는 VO와 DB에서 증가된 레코드 ROW가 완전히 동기화되도록 쿼리문이 작성되어져야
+	이후에 프로그램 작성시 문제 발생되지 않는다. -->
+	<!-- <insert id="addProduct" parameterType="myProduct">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			SELECT myproduct_seq.nextVal FROM dual
+		</selectKey>
+		INSERT
+		INTO myproduct (id, name, maker, price)
+		VALUES (#{id}, #{name}, #{maker}, #{price})
+	</insert> -->
+	
+	<!-- 추가되는 기능 :: 상품명, 제조사, 모든 상품 검색하는 mapper 쿼리를 추가한다. 
+		1) 쿼리문의 id는 option 태그의 value 값으로 한다.
+		2) 이때 findProductByName은 LIKE 연산자와 함께 와일드카드 %를 사용한다.
+		3) SELECT문에 속함...sql, include, resultType 대신에 resultMap을 사용 
+			(지금은 컬럼명과 필드명이 일치하기 때문에 resultMap을 사용하지 않아도 되지만 다를 경우를 대비해 사용해보기)
+			(DB 컬럼명은 snake case(Underscore), vo 필드명은 camel case로 많이 지음)
+			
+			setting name="mapUnderscoreToCamelCase" value="true"로 SqlMapConfig에서 지정함
+	-->
+	
+	<!-- <resultMap type="myProduct" id="productSelectMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="maker" column="maker" />
+		<result property="price" column="price" />
+	</resultMap> -->
+	
+	<sql id="select-myproduct">
+		SELECT
+		id, name, maker, price
+		FROM myproduct
+	</sql>
+	
+	<!-- 동적 쿼리 -->
+	<select id="findProducts" parameterType="string" resultType="myProduct">
+		<include refid="select-myproduct" />
+		<where>
+			<if test="value!=null">
+				name Like '%' || #{value} || '%'
+			</if>
+			<if test="value!=null">
+				OR maker=#{maker}
+			</if>
+		</where>
+		ORDER BY id DESC
+	</select>
+	
+</mapper>
