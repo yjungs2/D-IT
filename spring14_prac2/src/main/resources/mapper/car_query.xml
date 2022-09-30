@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.car.mapper">
+	<insert id="insert" parameterType="car">
+		INSERT INTO
+		car (num, model, price, vcode)
+		VALUES (#{num}, #{model}, #{price}, #{vcode})
+	</insert>
+	
+	<resultMap type="car" id="carWithCompany">
+		<id column="num" property="num" />
+		<result column="model" property="model" />
+		<result column="price" property="price" />
+		<result column="vcode" property="vcode" />
+		<association property="company" javaType="company">
+			<id column="vcode" property="vcode" />
+			<result column="vendor" property="vendor"/>
+		</association>
+	</resultMap>
+	
+	<!-- 동적 쿼리 :: 모든 차량  조회하기 & 특정 차량 조회하기 :: selectList() & selectOne() -->
+	<select id="select" parameterType="car" resultMap="carWithCompany">
+		<!-- join문 사용 -->
+		SELECT 
+		c.num, c.model, c.price, cp.vendor
+		FROM car c
+		JOIN company cp ON(c.vcode=cp.vcode)
+		<if test="num!=null">
+			WHERE num=#{num}
+		</if>
+		ORDER BY c.num ASC
+	</select>
+	
+	<!-- 동적 쿼리 :: 로그인 기능과 특정고객 찾는 기능 -->
+	<select id="selectUser" parameterType="userInfo" resultType="userInfo">
+		SELECT id,pw
+		FROM userinfo
+		WHERE id=#{id}
+		<if test="pw!=null">
+			AND pw=#{pw}
+		</if>
+	</select>
+	
+	<delete id="delete" parameterType="list">
+		DELETE
+		FROM car
+		WHERE num IN
+		<foreach collection="list" item="num" open="(" close=")" separator="," >
+			#{num}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="car">
+		UPDATE car
+		SET model=#{model}, price=#{price}
+		WHERE num=#{num}
+	</update>
+	
+	<insert id="registerMember" parameterType="userInfo">
+		INSERT INTO userinfo VALUES(#{id}, #{pw})
+	</insert>
+</mapper>
