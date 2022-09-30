@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.product.mapper">
+	<insert id="insert" parameterType="product">
+		INSERT INTO
+		product (code, title, category, rate, memo)
+		VALUES (#{code}, #{title}, #{category}, #{rate}, #{memo})
+	</insert>
+	
+	<resultMap type="product" id="productWith">
+		<id column="code" property="code" />
+		<result column="title" property="title" />
+		<result column="category" property="category" />
+		<result column="rate" property="rate" />
+		<result column="memo" property="memo" />
+	</resultMap>
+	
+	<!-- 동적 쿼리 :: 모든 차량  조회하기 & 특정 차량 조회하기 :: selectList() & selectOne() -->
+	<select id="select" parameterType="product" resultMap="productWith">
+		<!-- join문 사용 -->
+		SELECT 
+		code, title, category, rate, memo
+		FROM product
+		<if test="code!=null">
+			WHERE code=#{code}
+		</if>
+		ORDER BY code ASC
+	</select>
+	
+	<!-- 동적 쿼리 :: 로그인 기능과 특정고객 찾는 기능 -->
+	<select id="selectUser" parameterType="userInfo" resultType="userInfo">
+		SELECT id, pw, name
+		FROM userinfo
+		WHERE id=#{id}
+		<if test="pw!=null">
+			AND pw=#{pw}
+		</if>
+	</select>
+	
+	<delete id="delete" parameterType="list">
+		DELETE
+		FROM product
+		WHERE num IN
+		<foreach collection="list" item="num" open="(" close=")" separator="," >
+			#{num}
+		</foreach>
+	</delete>
+	
+	<!-- 수정
+	<update id="update" parameterType="product">
+		UPDATE car
+		SET model=#{model}, price=#{price}
+		WHERE num=#{num}
+	</update> -->
+	<!--
+	<insert id="registerMember" parameterType="userInfo">
+		INSERT INTO userinfo VALUES(#{id}, #{pw}, #{name})
+	</insert>  -->
+</mapper>
