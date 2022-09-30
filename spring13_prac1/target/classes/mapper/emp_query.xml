@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.emp.mapper">
+	<insert id="insert" parameterType="member">
+		INSERT INTO
+		emp (num, name, dept)
+		VALUES (#{num}, #{name}, #{dept})
+	</insert>
+	
+	<resultMap type="member" id="empWithDept">
+		<id column="num" property="num" />
+		<result column="name" property="name" />
+		<result column="dept" property="dept" />
+	</resultMap>
+	
+	<!-- 동적 쿼리 :: 모든 사원 조회하기 & 특정 사원 조회하기 :: selectList() & selectOne() -->
+	<select id="select" parameterType="member" resultMap="empWithDept">
+		<!-- join문 사용 -->
+		SELECT 
+		num, name, dept
+		FROM emp
+		<if test="num!=null">
+			WHERE num=#{num}
+		</if>
+		ORDER BY num ASC
+	</select>
+	
+	<!-- 동적 쿼리 :: 로그인 기능과 특정고객 찾는 기능
+	<select id="selectUser" parameterType="userInfo" resultType="userInfo">
+		SELECT 
+		id,pw
+		FROM userinfo
+		WHERE id=#{id}
+		<if test="pw!=null">
+			AND pw=#{pw}
+		</if>
+	</select> -->
+	
+	<delete id="delete" parameterType="list">
+		DELETE
+		FROM emp
+		WHERE num IN
+		<foreach collection="list" item="num" open="(" close=")" separator="," >
+			#{num}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="member">
+		UPDATE emp
+		SET name=#{name}, dept=#{dept}
+		WHERE num=#{num}
+	</update>
+</mapper>
